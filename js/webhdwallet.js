@@ -8,7 +8,7 @@ var TESTNET_PRIVATE = 0x04358394;
 var RECEIVE_CHAIN = 0;
 var CHANGE_CHAIN = 1;
 
-var GAP = 5;  // how many extra addresses to generate
+var GAP = 50;  // how many extra addresses to generate
 
     var key = null;
     var network = null;
@@ -478,6 +478,8 @@ var generateAddress = function(chain, index) {
 	$("#bip32_key_info_title").text(keylabel);
 	$("#network_label").text(networklabel);
 
+    if (!key) return;
+        
 	if (key.depth != 1) {
 	    alert("Non-standard key depth: should be 1, and it is "+key.depth+", are you sure you want to use that?");
 	}
@@ -491,7 +493,7 @@ var generateAddress = function(chain, index) {
     };
 
     function onInput(id, func) {
-        $(id).bind("input keyup keydown keypress change blur", function() {
+        $(id).bind("blur", function() {
             if ($(this).val() != jQuery.data(this, "lastvalue")) {
                 func();
             }
